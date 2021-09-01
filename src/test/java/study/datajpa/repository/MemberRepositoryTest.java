@@ -76,4 +76,17 @@ public class MemberRepositoryTest {
         assertThat(result.get(0).getAge()).isEqualTo(20);
         assertThat(result.size()).isEqualTo(1);
     }
+
+    @Test
+    public void testQuery() throws Exception {
+        // given
+        Member member1 = new Member("AAA", 10);
+        memberRepository.save(member1);
+
+        // when
+        List<Member> result = memberRepository.findUser("AAA", 10);
+
+        // then
+        assertThat(result.get(0)).isEqualTo(member1);
+    }
 }
