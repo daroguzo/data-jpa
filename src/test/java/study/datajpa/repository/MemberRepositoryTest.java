@@ -246,4 +246,31 @@ public class MemberRepositoryTest {
             System.out.println("Member.team: " + m.getTeam().getName());
         }
     }
+
+    @Test
+    public void queryHint() throws Exception {
+        // given
+        Member member1 = new Member("member1", 10);
+        memberRepository.save(member1);
+        entityManager.flush();
+        entityManager.clear();
+
+        // when
+        Member findMember = memberRepository.findReadOnlyByUsername("member1");
+        findMember.setUsername("member2");
+
+        entityManager.flush();
+    }
+
+    @Test
+    public void lock() throws Exception {
+        // given
+        Member member1 = new Member("member1", 10);
+        memberRepository.save(member1);
+        entityManager.flush();
+        entityManager.clear();
+
+        // when
+        List<Member> result = memberRepository.findLockByUsername("member1");
+    }
 }
