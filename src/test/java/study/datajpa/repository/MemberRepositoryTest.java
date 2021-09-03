@@ -280,4 +280,23 @@ public class MemberRepositoryTest {
         // when
         List<Member> result = memberRepository.findMemberCustom();
     }
+
+    @Test
+    public void projections() throws Exception {
+        //given
+        Team teamA = new Team("teamA");
+        entityManager.persist(teamA);
+        Member m1 = new Member("m1", 0, teamA);
+        Member m2 = new Member("m2", 0, teamA);
+        entityManager.persist(m1);
+        entityManager.persist(m2);
+        entityManager.flush();
+        entityManager.clear();
+
+        //when
+        List<UsernameOnly> result = memberRepository.findProjectionsByUsername("m1");
+
+        //then
+        assertThat(result.size()).isEqualTo(1);
+    }
 }
