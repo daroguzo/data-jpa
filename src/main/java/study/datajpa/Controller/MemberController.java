@@ -21,6 +21,7 @@ public class MemberController {
         return member.getUsername();
     }
 
+    // domain class converter
     @GetMapping("/member2/{id}")
     public String findMember2(@PathVariable("id") Member member) {
         return member.getUsername();
