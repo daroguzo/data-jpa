@@ -299,4 +299,19 @@ public class MemberRepositoryTest {
         //then
         assertThat(result.size()).isEqualTo(1);
     }
+
+    @Test
+    public void findByNativeQuery() throws Exception {
+        // given
+        Member member1 = new Member("member1", 10);
+        memberRepository.save(member1);
+        entityManager.flush();
+        entityManager.clear();
+
+        // when
+        Member findMember = memberRepository.findByNativeQuery("member1");
+
+        // then
+        assertThat(findMember.getUsername()).isEqualTo("member1");
+    }
 }
